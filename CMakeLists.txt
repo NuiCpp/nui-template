@@ -6,7 +6,7 @@ project(nui-template VERSION 0.1.0)
 include(FetchContent)
 FetchContent_Declare(
 	nui
-	GIT_REPOSITORY https://github.com/5cript/Nui.git
+	GIT_REPOSITORY https://github.com/NuiCpp/Nui.git
 	GIT_TAG        a42ab7d5ab6632f352379e5fa5969d368be331ab    
 )
 FetchContent_MakeAvailable(nui)
