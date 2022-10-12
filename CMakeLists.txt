@@ -3,29 +3,20 @@ cmake_minimum_required(VERSION 3.21)
 project(nui-template VERSION 0.1.0)
 
 # Nui Dependency
-include(FetchContent)
-FetchContent_Declare(
-	nui
-	GIT_REPOSITORY https://github.com/NuiCpp/Nui.git
-	GIT_TAG        a42ab7d5ab6632f352379e5fa5969d368be331ab    
-)
-FetchContent_MakeAvailable(nui)
+include (${CMAKE_CURRENT_LIST_DIR}/cmake/dependencies/nui.cmake)
+include (${CMAKE_CURRENT_LIST_DIR}/cmake/common_options.cmake)
 
-add_executable(nui-template)
-
-set(COMMON_OPTIONS -fexceptions -Wall -pedantic-errors -pedantic -fconstexpr-steps=1271242)
-set(DEBUG_OPTIONS  -g ${COMMON_OPTIONS})
-set(RELEASE_OPTIONS -O3 ${COMMON_OPTIONS})
-target_compile_options(nui-template PUBLIC "$<$<CONFIG:DEBUG>:${DEBUG_OPTIONS}>")
-target_compile_options(nui-template PUBLIC "$<$<CONFIG:RELEASE>:${RELEASE_OPTIONS}>")
+# Add executable (sources are added later, depending on frontend/backend)
+add_executable(${PROJECT_NAME})
+set_common_options(${PROJECT_NAME})
 
 if (EMSCRIPTEN)
 	# Link frontend of nui inside of emscripten
-	target_link_libraries(nui-template PRIVATE nui-frontend)
+	target_link_libraries(${PROJECT_NAME} PRIVATE nui-frontend)
   
 	nui_prepare_emscripten_target(
 		TARGET
-			nui-template
+			${PROJECT_NAME}
 		PREJS
 			${CMAKE_CURRENT_SOURCE_DIR}/frontend/module.js
 		EMSCRIPTEN_LINK_OPTIONS
@@ -33,17 +24,17 @@ if (EMSCRIPTEN)
 	)
   
 	# Use this to add more source files based on frontend/backend build
-	target_sources(nui-template PRIVATE frontend/frontend.cpp)
+	target_sources(${PROJECT_NAME} PRIVATE frontend/frontend.cpp)
 else()
     # Link backend of nui outside of emscripten
-    target_link_libraries(nui-template PRIVATE nui-backend)
+    target_link_libraries(${PROJECT_NAME} PRIVATE nui-backend)
 
-    nui_set_target_output_directories(nui-template)
+    nui_set_target_output_directories(${PROJECT_NAME})
 
     # Creates a target that is compiled through emscripten. This target becomes the frontend part.
-	nui_add_emscripten_target(nui-template
+	nui_add_emscripten_target(${PROJECT_NAME}
 		TARGET
-			nui-template
+			${PROJECT_NAME}
 		PREJS 
 			${CMAKE_CURRENT_SOURCE_DIR}/frontend/module.js
 		SOURCE_DIR
@@ -54,5 +45,5 @@ else()
 			# VERBOSE=1
 	)
 
-	target_sources(nui-template PRIVATE main.cpp)	
+	target_sources(${PROJECT_NAME} PRIVATE main.cpp)	
 endif()
