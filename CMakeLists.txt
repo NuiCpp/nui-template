@@ -34,7 +34,7 @@ if (EMSCRIPTEN)
             # -g
 	)
   
-    add_subdirectory(${CMAKE_SOURCE_DIR}/frontend/include)
+    add_subdirectory(${CMAKE_SOURCE_DIR}/frontend/source)
 else()
     # Link backend of nui outside of emscripten
     target_link_libraries(${PROJECT_NAME} PRIVATE nui-backend)
@@ -56,5 +56,5 @@ else()
 			# VERBOSE=1
 	)
 
-	add_subdirectory(${CMAKE_SOURCE_DIR}/backend/include)
+	add_subdirectory(${CMAKE_SOURCE_DIR}/backend/source)
 endif()
