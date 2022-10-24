@@ -4,7 +4,7 @@
 #include <nui/frontend/dom/dom.hpp>
 #include <nui/frontend/elements.hpp>
 
-void frontendMain() {
+extern "C" void EMSCRIPTEN_KEEPALIVE frontendMain() {
   using namespace Nui;
   using namespace Nui::Elements;
 

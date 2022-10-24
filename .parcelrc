@@ -1,0 +1,16 @@
+{
+  "extends": "@parcel/config-default",
+  "reporters": [
+    "...",
+    "parcel-reporter-static-files-copy"
+  ],
+  "devDependencies": {
+      "parcel": "^2.7.0",
+      "parcel-reporter-static-files-copy": "^1.4.0"
+  },
+  "staticFiles": {
+      "staticPath": "static/assets",
+      "staticOutPath": "assets",
+      "distDir": "../bin"
+  }
+}

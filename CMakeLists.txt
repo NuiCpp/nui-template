@@ -3,12 +3,14 @@ cmake_minimum_required(VERSION 3.21)
 project(nui-template VERSION 0.1.0)
 
 # Nui Dependency
-include (${CMAKE_CURRENT_LIST_DIR}/cmake/dependencies/nui.cmake)
-include (${CMAKE_CURRENT_LIST_DIR}/cmake/common_options.cmake)
+include (${CMAKE_CURRENT_LIST_DIR}/_cmake/dependencies/nui.cmake)
+include (${CMAKE_CURRENT_LIST_DIR}/_cmake/common_options.cmake)
 
 # Add executable (sources are added later, depending on frontend/backend)
 add_executable(${PROJECT_NAME})
 set_common_options(${PROJECT_NAME})
+
+set(PREJS_FILE ${CMAKE_SOURCE_DIR}/frontend/source/frontend/js/module.js)
 
 if (EMSCRIPTEN)
 	# Link frontend of nui inside of emscripten
@@ -17,14 +19,22 @@ if (EMSCRIPTEN)
 	nui_prepare_emscripten_target(
 		TARGET
 			${PROJECT_NAME}
+        PARCEL_ARGS
+            # --no-optimize
 		PREJS
-			${CMAKE_CURRENT_SOURCE_DIR}/frontend/module.js
+			${PREJS_FILE}
 		EMSCRIPTEN_LINK_OPTIONS
-			-sALLOW_MEMORY_GROWTH=1 # or other options, see emscripten docs.
+            -sEXPORTED_FUNCTIONS=_frontendMain
+            -O2
+			-sALLOW_MEMORY_GROWTH=1 
+            # -g
+            # or other options, see emscripten docs.
+        EMSCRIPTEN_COMPILE_OPTIONS
+            -O3
+            # -g
 	)
   
-	# Use this to add more source files based on frontend/backend build
-	target_sources(${PROJECT_NAME} PRIVATE frontend/frontend.cpp)
+    add_subdirectory(${CMAKE_SOURCE_DIR}/frontend/include)
 else()
     # Link backend of nui outside of emscripten
     target_link_libraries(${PROJECT_NAME} PRIVATE nui-backend)
@@ -36,14 +46,15 @@ else()
 		TARGET
 			${PROJECT_NAME}
 		PREJS 
-			${CMAKE_CURRENT_SOURCE_DIR}/frontend/module.js
+            ${PREJS_FILE}
 		SOURCE_DIR
 			${CMAKE_SOURCE_DIR}
 		CMAKE_OPTIONS
-			-DNUI_BUILD_EXAMPLES=off
-		# MAKE_OPTIONS
+            # I recommend to work with a release build by default because debug builds get big fast.
+            -DCMAKE_BUILD_TYPE=Release
+		MAKE_OPTIONS
 			# VERBOSE=1
 	)
 
-	target_sources(${PROJECT_NAME} PRIVATE main.cpp)	
+	add_subdirectory(${CMAKE_SOURCE_DIR}/backend/include)
 endif()
