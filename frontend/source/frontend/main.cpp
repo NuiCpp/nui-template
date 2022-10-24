@@ -1,17 +1,14 @@
+#include <frontend/main_page.hpp>
+
 #include <nui/core.hpp>
 #include <nui/window.hpp>
 
 #include <nui/frontend/dom/dom.hpp>
-#include <nui/frontend/elements.hpp>
 
 extern "C" void EMSCRIPTEN_KEEPALIVE frontendMain() {
-  using namespace Nui;
-  using namespace Nui::Elements;
-
-  const auto page = body{}("Hello World!");
-
-  thread_local Dom::Dom dom;
-  dom.setBody(page);
+  thread_local MainPage mainPage;
+  thread_local Nui::Dom::Dom dom;
+  dom.setBody(mainPage.render());
 }
 
 EMSCRIPTEN_BINDINGS(nui_example_frontend) {
