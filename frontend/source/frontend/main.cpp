@@ -5,7 +5,7 @@
 
 #include <nui/frontend/dom/dom.hpp>
 
-extern "C" void EMSCRIPTEN_KEEPALIVE frontendMain() {
+extern "C" void frontendMain() {
   thread_local MainPage mainPage;
   thread_local Nui::Dom::Dom dom;
   dom.setBody(mainPage.render());

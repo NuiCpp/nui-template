@@ -52,8 +52,6 @@ else()
 		CMAKE_OPTIONS
             # I recommend to work with a release build by default because debug builds get big fast.
             -DCMAKE_BUILD_TYPE=Release
-		MAKE_OPTIONS
-			# VERBOSE=1
 	)
 
 	add_subdirectory(${CMAKE_SOURCE_DIR}/backend/source/backend)
