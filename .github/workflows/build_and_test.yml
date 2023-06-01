@@ -66,6 +66,11 @@ jobs:
       - name: Workspace Path Fixup
         run: echo "WSPACE=$(cygpath '${{github.workspace}}')" >> $GITHUB_ENV
 
+      - name: Install node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 20
+
       - name: Configure CMake
         run: cmake -B ${{env.WSPACE}}/build/clang_${{env.BUILD_TYPE}} -G"Ninja" -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DNUI_BUILD_EXAMPLES=off -DCMAKE_CXX_EXTENSIONS=on -DCMAKE_CXX_FLAGS="-fuse-ld=lld" -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_C_COMPILER=clang -DCMAKE_LINKER=lld -DCMAKE_CXX_STANDARD=20
 
