@@ -5,3 +5,4 @@ _build
 .idea
 out
 CMakeSettings.json
+node_modules
