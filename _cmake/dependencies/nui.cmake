@@ -2,6 +2,6 @@ include(FetchContent)
 FetchContent_Declare(
 	nui
 	GIT_REPOSITORY https://github.com/NuiCpp/Nui.git
-	GIT_TAG        a840a596e6882f2daf443b987f827e15b50431fb    
+	GIT_TAG        37db996c52844b04b34bb49fc306139da1033870    
 )
 FetchContent_MakeAvailable(nui)
