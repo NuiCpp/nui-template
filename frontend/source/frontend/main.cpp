@@ -5,10 +5,15 @@
 
 #include <nui/frontend/dom/dom.hpp>
 
+#include <memory>
+
+static std::unique_ptr<MainPage> mainPage{};
+static std::unique_ptr<Nui::Dom::Dom> dom{};
+
 extern "C" void frontendMain() {
-  thread_local MainPage mainPage;
-  thread_local Nui::Dom::Dom dom;
-  dom.setBody(mainPage.render());
+  mainPage = std::make_unique<MainPage>();
+  dom = std::make_unique<Nui::Dom::Dom>();
+  dom->setBody(mainPage->render());
 }
 
 EMSCRIPTEN_BINDINGS(nui_example_frontend) {
