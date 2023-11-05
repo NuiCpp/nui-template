@@ -9,7 +9,7 @@ Rename the project "nui-template" in your cmake file to what your project is cal
 [Documentation](https://nuicpp.org/)
 
 ## Windows
-[Windows Installation](https://nuicpp.github.io/nui-documentation/docs/getting_started/installation_linux)
+[Windows Installation](https://nuicpp.github.io/nui-documentation/docs/getting_started/installation_windows)
 
 ## Linux
 [Linux Installation](https://nuicpp.github.io/nui-documentation/docs/getting_started/installation_linux)

@@ -1,4 +1,4 @@
-target_sources(${PROJECT_NAME} PRIVATE main.cpp)	
+target_sources(${PROJECT_NAME} PRIVATE main.cpp)
 
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/backend/include)
 
@@ -8,10 +8,10 @@ target_link_libraries(${PROJECT_NAME} PRIVATE nui-backend)
 nui_set_target_output_directories(${PROJECT_NAME})
 
 # Creates a target that is compiled through emscripten. This target becomes the frontend part.
-nui_add_emscripten_target(${PROJECT_NAME}
+nui_add_emscripten_target(
     TARGET
         ${PROJECT_NAME}
-    PREJS 
+    PREJS
         ${PREJS_FILE}
     SOURCE_DIR
         ${CMAKE_SOURCE_DIR}
