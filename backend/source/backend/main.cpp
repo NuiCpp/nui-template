@@ -7,7 +7,10 @@
 int main() {
   using namespace Nui;
 
-  Window window{{.title = "Nui", .debug = true /* may open dev tools */}};
+  Window window{Nui::WindowOptions{
+      .title = "Nui",
+      .debug = true /* may open dev tools */,
+  }};
   window.setSize(480, 320, WebViewHint::WEBVIEW_HINT_NONE);
   window.setHtml(index());
   window.run();
