@@ -7,7 +7,9 @@
 int main() {
   using namespace Nui;
 
+#ifdef __linux__
   setenv("WEBKIT_DISABLE_DMABUF_RENDERER", "1", 0);
+#endif
 
   Window window{Nui::WindowOptions{
       .title = "Nui",
