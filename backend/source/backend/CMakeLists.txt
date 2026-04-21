@@ -16,6 +16,18 @@ nui_add_emscripten_target(
     SOURCE_DIR
         ${CMAKE_SOURCE_DIR}
     CMAKE_OPTIONS
-        # I recommend to work with a release build by default because debug builds get big fast.
-        -DCMAKE_BUILD_TYPE=Release
+        -DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}
 )
+
+set(NUI_TEMPLATE_GENERATED_INDEX_HPP
+    "${CMAKE_BINARY_DIR}/module_${PROJECT_NAME}/include/index.hpp")
+set(NUI_TEMPLATE_GENERATED_INDEX_HTML
+    "${CMAKE_BINARY_DIR}/module_${PROJECT_NAME}/bin/index.html")
+
+set_source_files_properties(
+    main.cpp
+    PROPERTIES
+        OBJECT_DEPENDS "${NUI_TEMPLATE_GENERATED_INDEX_HPP}"
+)
+
+target_sources(${PROJECT_NAME} PRIVATE "${NUI_TEMPLATE_GENERATED_INDEX_HTML}")
