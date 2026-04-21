@@ -7,6 +7,8 @@
 int main() {
   using namespace Nui;
 
+  setenv("WEBKIT_DISABLE_DMABUF_RENDERER", "1", 0);
+
   Window window{Nui::WindowOptions{
       .title = "Nui",
       .debug = true /* may open dev tools */,
